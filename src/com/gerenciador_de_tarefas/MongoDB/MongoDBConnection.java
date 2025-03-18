@@ -28,7 +28,7 @@ public class MongoDBConnection {
 		if (mongoClient != null) {
 			try {
 				mongoClient.close();
-				mongoClient = null; // Garante que a instância seja recriada se necessário
+				mongoClient = null;
 			} catch (MongoClientException erro) {
 				System.err.println("Erro ao fechar conexão com o MongoDB: " + erro.getMessage());
 			}
