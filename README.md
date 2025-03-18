@@ -11,8 +11,8 @@ O Gerenciador de Tarefas é um aplicativo que permite adicionar, visualizar, mod
 * Clone este repositório ou baixe o código-fonte do Gerenciador de Tarefas.
 * Certifique-se de ter o JDK instalado e configurado corretamente em seu sistema.
 * Inicie o servidor MongoDB.
-* Abra a classe MongoDBConnection localizada no pacote com.gerenciadorDeTarefas.MongoDB. Dentro desta classe, defina a URL de conexão com o MongoDB. No código fornecido, a URL de conexão está definida como mongodb://localhost:27017. Certifique-se de que esta URL corresponda à localização do seu servidor MongoDB.
-* Para acessar o banco de dados e realizar operações, a classe TarefaDaoMongoDB localizada no pacote com.gerenciadorDeTarefas.model.dao.imp é responsável por interagir com o banco de dados MongoDB. Certifique-se de que os métodos nesta classe estejam configurados corretamente para atender às suas necessidades.
+* Abra a classe MongoDBConnection localizada no pacote com.gerenciador_de_tarefas.MongoDB. Dentro desta classe, defina a URL de conexão com o MongoDB. No código fornecido, a URL de conexão está definida como mongodb://localhost:27017. Certifique-se de que esta URL corresponda à localização do seu servidor MongoDB.
+* Para acessar o banco de dados e realizar operações, a classe TarefaDaoMongoDB localizada no pacote com.gerenciador_de_tarefas.model.dao.imp é responsável por interagir com o banco de dados MongoDB. Certifique-se de que os métodos nesta classe estejam configurados corretamente para atender às suas necessidades.
 
 ## Utilização
 Ao iniciar o programa, uma interface de linha de comando será exibida com as seguintes opções de menu:

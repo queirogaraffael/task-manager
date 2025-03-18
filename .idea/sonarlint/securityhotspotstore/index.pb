@@ -1,0 +1,25 @@
+
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+d
+4src/com/gerenciador_de_tarefas/application/Main.java,4\e\4eef5ca7b53ef94bfd51add971d2373f1d5b7ab9
+o
+?src/com/gerenciador_de_tarefas/view/GerenciadorTarefasView.java,6\c\6c210ab5ffb63b136fbbc0fcc52a582248772e0f
+|
+Lsrc/com/gerenciador_de_tarefas/controller/MenuPrincipalTarefaController.java,5\4\542bc8d903ff428b92a3c50a988b78af1482c8de
+g
+7src/com/gerenciador_de_tarefas/util/ComparadorData.java,a\f\af735c132574ce1ee3ee132342f8b11e47f38ba5
+]
+-src/com/gerenciador_de_tarefas/util/Data.java,5\8\58f36586017316a73e799b5e40cffa6530d9081b
+b
+2src/com/gerenciador_de_tarefas/view/DataViews.java,3\1\319c4363ba8f7f4fa34073cf95000e6d34b9cd8b
+f
+6src/com/gerenciador_de_tarefas/enums/StatusTarefa.java,4\9\49d5f253509a995621b17b04c063802fcfba9d2c
+…
+Usrc/com/gerenciador_de_tarefas/commons/constantes/ConstantesOpcaoModificarTarefa.java,3\8\3891627dcfdce691b83f8bbdd430eb29cc2706eb
+i
+9src/com/gerenciador_de_tarefas/model/entities/Tarefa.java,4\2\424fa870bec1585b1cf12c99783ac194a8df6d5a
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+~
+Nsrc/com/gerenciador_de_tarefas/commons/constantes/ConstantesMenuPrincipal.java,8\0\80b67ef655f0fbab4abd3d73fc21e9478f22ceef
