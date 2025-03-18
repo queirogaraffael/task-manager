@@ -1,8 +1,8 @@
-package com.gerenciador_de_tarefas.view;
+package com.gerenciador_de_tarefas.ui;
 
 import javax.swing.*;
 
-public class GerenciadorTarefasView {
+public class GerenciadorTarefasUI {
 
     private static final String MESSAGE = "Escolha uma opcao: ";
     private static final String TITLE = "Gerenciador Tarefas";

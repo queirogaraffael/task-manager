@@ -12,7 +12,7 @@ import com.gerenciador_de_tarefas.util.Data;
 import com.gerenciador_de_tarefas.model.dao.DaoFactory;
 import com.gerenciador_de_tarefas.model.dao.TarefaDao;
 import com.gerenciador_de_tarefas.model.entities.Tarefa;
-import com.gerenciador_de_tarefas.view.GerenciadorTarefasView;
+import com.gerenciador_de_tarefas.ui.GerenciadorTarefasUI;
 
 public class MenuPrincipalTarefaController {
 
@@ -30,7 +30,7 @@ public class MenuPrincipalTarefaController {
 		do {
 
 			try {
-				opcaoMenuPrincipal = GerenciadorTarefasView.menuPrincipalView();
+				opcaoMenuPrincipal = GerenciadorTarefasUI.menuPrincipalView();
 
 				switch (opcaoMenuPrincipal) {
 

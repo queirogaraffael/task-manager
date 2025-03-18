@@ -1,4 +1,4 @@
-package com.gerenciador_de_tarefas.view;
+package com.gerenciador_de_tarefas.ui;
 
 import com.gerenciador_de_tarefas.model.entities.Tarefa;
 import com.gerenciador_de_tarefas.util.Data;
@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class DataViews {
+public class DataUI {
 
     public static LocalDate solicitarDataValida() {
         Object[] opcoes = { "Sim", "Não" };
