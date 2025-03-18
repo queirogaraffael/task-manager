@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 public class Tarefa {
 
-	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	private String id;
 	private String titulo;
@@ -21,22 +21,21 @@ public class Tarefa {
 	private LocalDate data;
 	private StatusTarefa statusTarefa;
 
-
 	@Override
 	public String toString() {
-
 		StringBuilder sb = new StringBuilder();
-
-		sb.append("Titulo: ").append(titulo).append("\n").append("Descricao: ").append(descricao).append("\n");
+		sb.append("Tarefa {\n")
+				.append("  Titulo: ").append(titulo).append("\n")
+				.append("  Descricao: ").append(descricao).append("\n");
 
 		if (data != null) {
-			sb.append("Data: ").append(data.format(formatter)).append("\n");
+			sb.append("  Data: ").append(data.format(FORMATTER)).append("\n");
 		}
 
-		sb.append("Status: ").append(statusTarefa);
+		sb.append("  Status: ").append(statusTarefa).append("\n")
+				.append("}");
 
 		return sb.toString();
-
 	}
-
 }
+
