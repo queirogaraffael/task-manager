@@ -14,7 +14,7 @@ public class DataUI {
 
         int opcaoData = JOptionPane.showOptionDialog(
                 null,
-                "Deseja adicionar uma data específica?",
+                "Deseja adicionar uma data de conclusao para a tarefa ?",
                 "Data",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,

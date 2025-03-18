@@ -3,14 +3,16 @@ package com.gerenciador_de_tarefas.controller;
 import com.gerenciador_de_tarefas.MongoDB.MongoDBConnection;
 import com.gerenciador_de_tarefas.commons.constantes.ConstantesMenuPrincipal;
 import com.gerenciador_de_tarefas.dtos.TarefaCreateDTO;
+import com.gerenciador_de_tarefas.dtos.TarefaResponseDTO;
+import com.gerenciador_de_tarefas.dtos.TarefaVisualizationDTO;
 import com.gerenciador_de_tarefas.enums.StatusTarefa;
 import com.gerenciador_de_tarefas.service.TarefaService;
-import com.gerenciador_de_tarefas.ui.AlertasTarefa;
-import com.gerenciador_de_tarefas.ui.DataUI;
-import com.gerenciador_de_tarefas.ui.GerenciadorTarefasUI;
-import com.gerenciador_de_tarefas.ui.LerDadosTarefaUI;
+import com.gerenciador_de_tarefas.ui.*;
+import com.gerenciador_de_tarefas.util.ComparadorData;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuPrincipalTarefaController {
 
@@ -36,6 +38,7 @@ public class MenuPrincipalTarefaController {
                         break;
 
                     case (ConstantesMenuPrincipal.VISUALIZAR_TAREFA):
+                        visualizarTarefa();
                         break;
 
                     case (ConstantesMenuPrincipal.MARCAR_CONCLUIDA):
@@ -80,9 +83,10 @@ public class MenuPrincipalTarefaController {
         tarefa.setTitulo(titulo);
         tarefa.setDescricao(descricao);
 
-        LocalDate data = DataUI.solicitarDataValida();
+        LocalDate dataConclusao = DataUI.solicitarDataValida();
 
-        tarefa.setData(data);
+        tarefa.setDataCriacao(LocalDate.now());
+        tarefa.setDataConclusao(dataConclusao);
 
         tarefa.setStatusTarefa(StatusTarefa.NAO_EXECUTADA);
 
@@ -93,18 +97,46 @@ public class MenuPrincipalTarefaController {
 
     }
 
-    /*
-    private void visualizaIdTituloDataStatusTarefas() throws Exception {
+    private void visualizarTarefa() throws Exception {
+        int opcaoVisualizarTarefa = VisualizarTarefaUI.exibirMenuVisualizarTarefas();
+        List<TarefaVisualizationDTO> tarefas = new ArrayList<>();
 
-        if (tarefaDao.retornaNumeroDeTarefas() == 0) {
-            JOptionPane.showMessageDialog(null, "Adicione primeiro tarefas!");
-        } else {
-            String relatorio = tarefaDao.retornaIdTituloStatusDataTarefas();
-
-            JOptionPane.showMessageDialog(null, relatorio);
+        switch (opcaoVisualizarTarefa) {
+            case 0:
+                tarefas = tarefaService.retornaTarefasExecutadas();
+                break;
+            case 1:
+                tarefas = tarefaService.retornaTarefasNaoExecutadas();
+                break;
+            case 2:
+                tarefas = tarefaService.retornaTarefas();
+                break;
+            case 3:
+                return;
         }
 
+        if (tarefas.isEmpty()) {
+            AlertasTarefa.alertaListaVazia();
+            return;
+        }
+
+        tarefas.sort(new ComparadorData());
+
+        String tituloTarefaSelecionada = SelecionaTarefa.selecionaTituloTarefa(tarefas);
+        TarefaResponseDTO tarefaSelecionada = tarefaService.retornaTarefaPeloTitulo(tituloTarefaSelecionada);
+
+
+        VisualizarTarefaUI.exibirTarefaSelecionada(tarefaSelecionada);
+
     }
+
+
+
+
+
+
+    /*
+
 
     private void visualizaTarefaPeloId() throws Exception {
 

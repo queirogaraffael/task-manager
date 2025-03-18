@@ -13,7 +13,8 @@ import java.time.LocalDate;
 public class TarefaCreateDTO {
     private String titulo;
     private String descricao;
-    private LocalDate data;
+    private LocalDate dataCriacao;
+    private LocalDate dataConclusao;
     private StatusTarefa statusTarefa;
 
 }

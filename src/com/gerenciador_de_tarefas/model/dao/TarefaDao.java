@@ -1,6 +1,10 @@
 package com.gerenciador_de_tarefas.model.dao;
 
+import com.gerenciador_de_tarefas.dtos.TarefaResponseDTO;
+import com.gerenciador_de_tarefas.dtos.TarefaVisualizationDTO;
 import com.gerenciador_de_tarefas.model.entities.Tarefa;
+
+import java.util.List;
 
 public interface TarefaDao {
 
@@ -8,6 +12,13 @@ public interface TarefaDao {
 
 	boolean haTarefaComMesmoTitulo(String tituloTarefa);
 
+	List<TarefaVisualizationDTO> retornaTarefasExecutadas();
+
+	List<TarefaVisualizationDTO> retornaTarefaNaoExecutadas();
+
+	List<TarefaVisualizationDTO> retornaTarefas();
+
+	TarefaResponseDTO retornaTarefaPeloTitulo(String titulo);
 
 	/*
 	String retornaIdTituloStatusDataTarefas() throws Exception;

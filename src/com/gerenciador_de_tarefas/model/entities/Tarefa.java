@@ -13,30 +13,15 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 public class Tarefa {
 
-	public static final String FORMATO_DATA = "dd/MM/yyyy";
+    public static final String FORMATO_DATA = "dd/MM/yyyy";
 
-	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(FORMATO_DATA);
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(FORMATO_DATA);
 
-	private String titulo;
-	private String descricao;
-	private LocalDate data;
-	private StatusTarefa statusTarefa;
+    private String titulo;
+    private String descricao;
+    private LocalDate dataCriacao;
+    private LocalDate dataConclusao;
+    private StatusTarefa statusTarefa;
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Tarefa {\n")
-				.append("  Titulo: ").append(titulo).append("\n")
-				.append("  Descricao: ").append(descricao).append("\n");
-
-		if (data != null) {
-			sb.append("  Data: ").append(data.format(FORMATTER)).append("\n");
-		}
-
-		sb.append("  Status: ").append(statusTarefa).append("\n")
-				.append("}");
-
-		return sb.toString();
-	}
 }
 

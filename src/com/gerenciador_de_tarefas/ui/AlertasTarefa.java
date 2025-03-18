@@ -16,6 +16,7 @@ public class AlertasTarefa {
         JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
     }
 
-
-
+    public static void alertaListaVazia() {
+        JOptionPane.showMessageDialog(null, "Lista vazia");
+    }
 }
