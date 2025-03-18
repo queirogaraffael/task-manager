@@ -1,4 +1,4 @@
-package com.gerenciador_de_tarefas.application;
+package com.gerenciador_de_tarefas;
 
 import com.gerenciador_de_tarefas.controller.MenuPrincipalTarefaController;
 

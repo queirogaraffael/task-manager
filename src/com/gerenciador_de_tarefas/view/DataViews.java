@@ -5,28 +5,45 @@ import com.gerenciador_de_tarefas.util.Data;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class DataViews {
 
-    public static void solicitarDataValida(Tarefa tarefa) {
-        Object[] opcoes = { "Sim", "Nao" };
+    public static LocalDate solicitarDataValida() {
+        Object[] opcoes = { "Sim", "Não" };
 
-        int opcaoData = JOptionPane.showOptionDialog(null, "Deseja adicionar uma data especifica ?", "Data",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opcoes, opcoes[0]);
+        int opcaoData = JOptionPane.showOptionDialog(
+                null,
+                "Deseja adicionar uma data específica?",
+                "Data",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcoes,
+                opcoes[0]
+        );
 
         if (opcaoData == 0) {
-            String dataString = JOptionPane.showInputDialog("Digite uma data no formato dd/MM/yyyy");
-            boolean formatoAprovado = Data.verificaFormatoData(dataString);
-
-            while (!formatoAprovado) {
-                JOptionPane.showMessageDialog(null, "Formato da data incorreto. Tente novamente!");
-                dataString = JOptionPane.showInputDialog("Digite uma data no formato dd/MM/yyyy");
-                formatoAprovado = Data.verificaFormatoData(dataString);
-            }
-            tarefa.setData(dataString);
-
+            String dataString = solicitarDataUsuario();
+            return LocalDate.parse(dataString, DateTimeFormatter.ofPattern(Tarefa.FORMATO_DATA));
         } else {
-            tarefa.setData(LocalDate.now().format(formatter));
+            return LocalDate.now();
         }
     }
+
+    private static String solicitarDataUsuario() {
+        String dataString;
+
+        do {
+            dataString = JOptionPane.showInputDialog("Digite uma data no formato " + Tarefa.FORMATO_DATA);
+
+            if (!Data.isFormatoValido(dataString)) {
+                JOptionPane.showMessageDialog(null, "Formato inválido! Por favor, use o formato " + Tarefa.FORMATO_DATA);
+            }
+        } while (!Data.isFormatoValido(dataString));
+
+        return dataString;
+    }
 }
+
+

@@ -13,7 +13,9 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 public class Tarefa {
 
-	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	public static final String FORMATO_DATA = "dd/MM/yyyy";
+
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(FORMATO_DATA);
 
 	private String id;
 	private String titulo;

@@ -1,37 +1,28 @@
 package com.gerenciador_de_tarefas.util;
 
+import com.gerenciador_de_tarefas.model.entities.Tarefa;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import javax.swing.JOptionPane;
-
-import com.gerenciador_de_tarefas.model.entities.Tarefa;
-
 public class Data {
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(Tarefa.FORMATO_DATA);
 
-	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-	public static boolean verificaFormatoData(String stringData) {
-		try {
-			LocalDate.parse(stringData, formatter);
-
-			return true;
-		} catch (DateTimeParseException erro) {
-			return false;
-		}
-
+	public static boolean isFormatoValido(String dataString) {
+		return parseData(dataString) != null;
 	}
 
+	public static boolean isDataPassada(String dataString) {
+		LocalDate data = parseData(dataString);
+		return data != null && data.isBefore(LocalDate.now());
+	}
 
-	public static boolean dataJaPassou(String dataString) {
+	private static LocalDate parseData(String dataString) {
 		try {
-			LocalDate data = LocalDate.parse(dataString, formatter);
-			LocalDate hoje = LocalDate.now();
-			return data.isBefore(hoje);
+			return LocalDate.parse(dataString, FORMATTER);
 		} catch (DateTimeParseException e) {
-			return false;
+			return null;
 		}
 	}
-
 }
