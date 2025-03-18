@@ -1,19 +1,16 @@
 package com.gerenciador_de_tarefas.controller;
 
-import java.util.List;
-
-import javax.swing.JOptionPane;
-
 import com.gerenciador_de_tarefas.MongoDB.MongoDBConnection;
 import com.gerenciador_de_tarefas.commons.constantes.ConstantesMenuPrincipal;
-import com.gerenciador_de_tarefas.commons.constantes.ConstantesOpcaoModificarTarefa;
+import com.gerenciador_de_tarefas.dtos.TarefaCreateDTO;
+import com.gerenciador_de_tarefas.enums.StatusTarefa;
 import com.gerenciador_de_tarefas.service.TarefaService;
-import com.gerenciador_de_tarefas.util.ComparadorData;
-import com.gerenciador_de_tarefas.util.Data;
-import com.gerenciador_de_tarefas.factory.DaoFactory;
-import com.gerenciador_de_tarefas.model.dao.TarefaDao;
-import com.gerenciador_de_tarefas.model.entities.Tarefa;
+import com.gerenciador_de_tarefas.ui.AlertasTarefa;
+import com.gerenciador_de_tarefas.ui.DataUI;
 import com.gerenciador_de_tarefas.ui.GerenciadorTarefasUI;
+import com.gerenciador_de_tarefas.ui.LerDadosTarefaUI;
+
+import java.time.LocalDate;
 
 public class MenuPrincipalTarefaController {
 
@@ -30,7 +27,7 @@ public class MenuPrincipalTarefaController {
         do {
 
             try {
-                opcaoMenuPrincipal = GerenciadorTarefasUI.menuPrincipalView();
+                opcaoMenuPrincipal = GerenciadorTarefasUI.exibirMenuGerenciadorDeTarefas();
 
                 switch (opcaoMenuPrincipal) {
 
@@ -38,49 +35,29 @@ public class MenuPrincipalTarefaController {
                         adicionaTarefa();
                         break;
 
-                    case (ConstantesMenuPrincipal.VISUALIZA_ID_TITULO_DATA_STATUS):
-                        visualizaIdTituloDataStatusTarefas();
-                        break;
-
-                    case (ConstantesMenuPrincipal.VISUALIZAR_TAREFA_ID):
-                        visualizaTarefaPeloId();
-                        break;
-
-                    case (ConstantesMenuPrincipal.VISUALIZAR_NAO_CONCLUIDA):
-                        visualizaTarefasNaoConcluidas();
-                        break;
-
-                    case (ConstantesMenuPrincipal.VISUALIZAR_CONCLUIDA):
-                        visualizaTarefasConcluidas();
+                    case (ConstantesMenuPrincipal.VISUALIZAR_TAREFA):
                         break;
 
                     case (ConstantesMenuPrincipal.MARCAR_CONCLUIDA):
-                        marcaTarefaComoConcluida();
-                        break;
 
-                    case (ConstantesMenuPrincipal.MARCAR_CONCLUIDA_PELA_DATA):
-                        marcaComoConcluidaPelaData();
                         break;
 
                     case (ConstantesMenuPrincipal.DESMARCAR_CONCLUIDA):
-                        desmarcaTarefaComoConcluida();
+
                         break;
 
                     case (ConstantesMenuPrincipal.MODIFICAR):
-                        modificaTarefa();
                         break;
 
                     case (ConstantesMenuPrincipal.REMOVER):
-                        removeTarefa();
                         break;
 
                     case (ConstantesMenuPrincipal.SAIR):
                         MongoDBConnection.close();
-
                 }
 
             } catch (Exception erro) {
-                JOptionPane.showMessageDialog(null, "Erro: " + erro.getMessage());
+                AlertasTarefa.alertaErro(erro);
             }
 
         } while (!opcaoMenuPrincipal.equals(ConstantesMenuPrincipal.SAIR));
@@ -89,30 +66,34 @@ public class MenuPrincipalTarefaController {
 
     private void adicionaTarefa() throws Exception {
 
-        String idTarefa = JOptionPane.showInputDialog("Digite o ID da tarefa: ");
+        String titulo = LerDadosTarefaUI.lerTituloTarefa();
 
-        if (tarefaDao.verificaSeJaTemId(idTarefa)) {
-            JOptionPane.showMessageDialog(null, "Id ja cadastrado. Tente com outro!");
-        } else {
-
-            String titulo = JOptionPane.showInputDialog("Titulo da tarefa: ");
-            String descricao = JOptionPane.showInputDialog("Descricao da tarefa: ");
-
-            Tarefa tarefa = new Tarefa();
-            tarefa.setTitulo(titulo);
-            tarefa.setDescricao(descricao);
-            tarefa.setStatus(false);
-
-            Data.solicitarDataValida(tarefa);
-
-            tarefaDao.insereTarefa(idTarefa, tarefa);
-
-            JOptionPane.showMessageDialog(null, "Tarefa adicionada com sucesso!");
-
+        if (tarefaService.haTarefaComMesmoTitulo(titulo)) {
+            AlertasTarefa.alertaTarefaComMesmoTitulo();
+            return;
         }
+
+        String descricao = LerDadosTarefaUI.lerDescricaoTarefa();
+
+        TarefaCreateDTO tarefa = new TarefaCreateDTO();
+
+        tarefa.setTitulo(titulo);
+        tarefa.setDescricao(descricao);
+
+        LocalDate data = DataUI.solicitarDataValida();
+
+        tarefa.setData(data);
+
+        tarefa.setStatusTarefa(StatusTarefa.NAO_EXECUTADA);
+
+        tarefaService.insereTarefa(tarefa);
+
+        AlertasTarefa.alertaTarefaAdicionada();
+
 
     }
 
+    /*
     private void visualizaIdTituloDataStatusTarefas() throws Exception {
 
         if (tarefaDao.retornaNumeroDeTarefas() == 0) {
@@ -292,5 +273,7 @@ public class MenuPrincipalTarefaController {
         }
 
     }
+
+     */
 
 }

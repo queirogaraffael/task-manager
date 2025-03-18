@@ -1,13 +1,15 @@
 package com.gerenciador_de_tarefas.model.dao;
 
-import java.util.List;
-
 import com.gerenciador_de_tarefas.model.entities.Tarefa;
 
 public interface TarefaDao {
 
-	void insereTarefa(String id, Tarefa tarefa) throws Exception;
+	void insereTarefa(Tarefa tarefa) throws Exception;
 
+	boolean haTarefaComMesmoTitulo(String tituloTarefa);
+
+
+	/*
 	String retornaIdTituloStatusDataTarefas() throws Exception;
 
 	Tarefa retornaTarefaPeloId(String id) throws Exception;
@@ -31,4 +33,6 @@ public interface TarefaDao {
 	boolean verificaSeJaTemId(String id) throws Exception;
 
 	void marcaComoConcluidaPelaData() throws Exception;
+
+	 */
 }

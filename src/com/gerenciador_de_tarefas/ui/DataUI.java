@@ -27,7 +27,7 @@ public class DataUI {
             String dataString = solicitarDataUsuario();
             return LocalDate.parse(dataString, DateTimeFormatter.ofPattern(Tarefa.FORMATO_DATA));
         } else {
-            return LocalDate.now();
+            return null;
         }
     }
 

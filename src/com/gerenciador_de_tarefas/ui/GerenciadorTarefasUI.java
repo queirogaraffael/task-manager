@@ -4,24 +4,19 @@ import javax.swing.*;
 
 public class GerenciadorTarefasUI {
 
-    private static final String MESSAGE = "Escolha uma opcao: ";
-    private static final String TITLE = "Gerenciador Tarefas";
+    public static String exibirMenuGerenciadorDeTarefas() {
+        Object[] opcoesMenu = {"Adicionar", "Visualizar Tarefa(s)", "Marcar como concluida",
+                "Marcar tarefas como concluídas pela data", "Desmarcar como concluída",
+                "Modificar", "Remover", "Sair"};
 
-    private static final Object[] OPCOES_MENU = {"Adicionar", "Visualizar Tarefa(s)", "Marcar como concluida", "Marca tarefas como concluidas pela data", "Desmarcar como concluida",
-            "Modificar", "Remover", "Sair"};
+        Object opcaoSelecionada = JOptionPane.showInputDialog(null, "Escolha uma opcao", "Gerenciador de Tarefas",
+                JOptionPane.INFORMATION_MESSAGE, null, opcoesMenu, opcoesMenu[0]);
 
-    public static int menuPrincipalView() {
-        return JOptionPane.showOptionDialog(
-                null,
-                MESSAGE,
-                TITLE,
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                OPCOES_MENU,
-                OPCOES_MENU[0]
-        );
-
+        if (opcaoSelecionada != null) {
+            return opcaoSelecionada.toString();
+        }
+        return "";
     }
+
 
 }

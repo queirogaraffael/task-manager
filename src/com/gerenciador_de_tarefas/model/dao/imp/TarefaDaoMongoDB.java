@@ -1,18 +1,14 @@
 package com.gerenciador_de_tarefas.model.dao.imp;
 
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bson.Document;
-
-import com.gerenciador_de_tarefas.util.Data;
 import com.gerenciador_de_tarefas.model.dao.TarefaDao;
 import com.gerenciador_de_tarefas.model.entities.Tarefa;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import org.bson.Document;
+
+import java.time.format.DateTimeFormatter;
 
 public class TarefaDaoMongoDB implements TarefaDao {
 	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -25,13 +21,29 @@ public class TarefaDaoMongoDB implements TarefaDao {
 	}
 
 	@Override
-	public void insereTarefa(String id, Tarefa tarefa) throws Exception {
-		Document doc = new Document("_id", id).append("titulo", tarefa.getTitulo())
-				.append("descricao", tarefa.getDescricao()).append("data", tarefa.getData().format(formatter))
-				.append("status", tarefa.getStatus());
+	public void insereTarefa(Tarefa tarefa) throws Exception {
+		if (tarefa == null) {
+			throw new IllegalArgumentException("A tarefa não pode ser nula.");
+		}
+
+		Document doc = new Document()
+				.append("titulo", tarefa.getTitulo())
+				.append("descricao", tarefa.getDescricao())
+				.append("data", tarefa.getData() != null ? tarefa.getData().format(DateTimeFormatter.ofPattern(Tarefa.FORMATO_DATA)) : null)
+				.append("status", tarefa.getStatusTarefa() != null ? tarefa.getStatusTarefa().toString() : null);
+
 		collection.insertOne(doc);
 	}
 
+	@Override
+	public boolean haTarefaComMesmoTitulo(String tituloTarefa) {
+		return collection.find(Filters.eq("titulo", tituloTarefa)).first() != null;
+	}
+
+
+
+
+	/*
 	@Override
 	public String retornaIdTituloStatusDataTarefas() throws Exception {
 		StringBuilder sb = new StringBuilder();
@@ -140,11 +152,6 @@ public class TarefaDaoMongoDB implements TarefaDao {
 		return collection.countDocuments();
 	}
 
-	@Override
-	public boolean verificaSeJaTemId(String id) throws Exception {
-		Document existingDoc = collection.find(Filters.eq("_id", id)).first();
-		return existingDoc != null;
-	}
 
 	@Override
 	public void marcaComoConcluidaPelaData() throws Exception {
@@ -158,6 +165,6 @@ public class TarefaDaoMongoDB implements TarefaDao {
 			}
 		}
 
-	}
+	} */
 
 }

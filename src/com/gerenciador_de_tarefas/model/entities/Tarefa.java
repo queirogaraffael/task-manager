@@ -17,7 +17,6 @@ public class Tarefa {
 
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(FORMATO_DATA);
 
-	private String id;
 	private String titulo;
 	private String descricao;
 	private LocalDate data;
