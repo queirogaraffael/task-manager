@@ -6,6 +6,7 @@ import com.gerenciador_de_tarefas.dtos.TarefaVisualizationDTO;
 import com.gerenciador_de_tarefas.model.dao.TarefaDao;
 import com.gerenciador_de_tarefas.model.entities.Tarefa;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class TarefaService {
@@ -39,5 +40,25 @@ public class TarefaService {
 
     public TarefaResponseDTO retornaTarefaPeloTitulo(String titulo) {
         return tarefaDao.retornaTarefaPeloTitulo(titulo);
+    }
+
+    public void marcaTarefaComoConcluidaPeloTitulo(String titulo) throws Exception {
+        tarefaDao.marcaTarefaComoConcluidaPeloTitulo(titulo);
+    }
+
+    public void desmarcaTarefaComoConcluidaPeloTitulo(String tituloTarefa) {
+        tarefaDao.desmarcaTarefaComoConcluidaPeloTitulo(tituloTarefa);
+    }
+
+    public void deleteTarefa(String titulo) throws Exception {
+    	tarefaDao.deleteTarefa(titulo);
+    }
+
+    public void modificaDescricaoTarefaPeloTitulo(String tituloTarefa, String novaDescricao) throws Exception {
+        tarefaDao.modificaDescricaoTarefaPeloTitulo(tituloTarefa, novaDescricao);
+    }
+
+    public void modificaDataTarefaPeloTitulo(String tituloTarefa, LocalDate novaData) throws Exception {
+        tarefaDao.modificaDataTarefaPeloTitulo(tituloTarefa, novaData);
     }
 }

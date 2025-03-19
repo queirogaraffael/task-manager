@@ -4,6 +4,7 @@ import com.gerenciador_de_tarefas.dtos.TarefaResponseDTO;
 import com.gerenciador_de_tarefas.dtos.TarefaVisualizationDTO;
 import com.gerenciador_de_tarefas.model.entities.Tarefa;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface TarefaDao {
@@ -20,30 +21,13 @@ public interface TarefaDao {
 
 	TarefaResponseDTO retornaTarefaPeloTitulo(String titulo);
 
-	/*
-	String retornaIdTituloStatusDataTarefas() throws Exception;
+	void marcaTarefaComoConcluidaPeloTitulo(String titulo) throws Exception;
 
-	Tarefa retornaTarefaPeloId(String id) throws Exception;
+	void desmarcaTarefaComoConcluidaPeloTitulo(String tituloTarefa);
 
-	List<Tarefa> retornaTarefasNaoConcluidas() throws Exception;
+	void deleteTarefa(String titulo) throws Exception;
 
-	List<Tarefa> retornaTarefasConcluidas() throws Exception;
+	void modificaDescricaoTarefaPeloTitulo(String tituloTarefa, String novaDescricao) throws Exception;
 
-	void marcaTarefaComoConcluidaPeloId(String id) throws Exception;
-
-	void dermarcaTarefaComoConcluidaPeloId(String id) throws Exception;
-
-	void modificaDescricaoTarefaPeloId(Tarefa tarefa, String novaDescricao) throws Exception;
-
-	void modificaDataTarefaPeloId(Tarefa tarefa, String novaData) throws Exception;
-
-	void deleteTarefa(String id) throws Exception;
-
-	Long retornaNumeroDeTarefas() throws Exception;
-
-	boolean verificaSeJaTemId(String id) throws Exception;
-
-	void marcaComoConcluidaPelaData() throws Exception;
-
-	 */
+	void modificaDataTarefaPeloTitulo(String tituloTarefa, LocalDate novaData) throws Exception;
 }

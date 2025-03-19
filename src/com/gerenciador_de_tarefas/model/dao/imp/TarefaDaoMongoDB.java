@@ -10,6 +10,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 
 import java.time.LocalDate;
@@ -135,128 +136,81 @@ public class TarefaDaoMongoDB implements TarefaDao {
         return null;
     }
 
-	/*
-	@Override
-	public String retornaIdTituloStatusDataTarefas() throws Exception {
-		StringBuilder sb = new StringBuilder();
+    @Override
+    public void marcaTarefaComoConcluidaPeloTitulo(String titulo) throws Exception {
+        if (titulo == null || titulo.isEmpty()) {
+            throw new IllegalArgumentException("O título da tarefa não pode ser nulo ou vazio.");
+        }
 
-		for (Document doc : collection.find()) {
+        Document filterDocument = new Document("titulo", titulo);
+        Document updateDoc = new Document("$set", new Document("status", StatusTarefa.EXECUTADA.name()));
 
-			Tarefa tarefa = new Tarefa(doc.getString("_id"), doc.getString("titulo"), null, doc.getString("data"),
-					doc.getBoolean("status"));
+        UpdateResult result = collection.updateOne(filterDocument, updateDoc);
 
-			sb.append("Id: " + tarefa.getId() + ", Titulo: " + tarefa.getTitulo() + ", Data: "
-					+ tarefa.getData().format(formatter) + ", Status: " + tarefa.retornaStatusFormatado()).append("\n");
+        if (result.getModifiedCount() == 0) {
+            throw new Exception("Nenhuma tarefa encontrada com o título fornecido ou a tarefa já estava concluída.");
+        }
+    }
 
-		}
-		return sb.toString();
+    @Override
+    public void desmarcaTarefaComoConcluidaPeloTitulo(String tituloTarefa) {
+        if (tituloTarefa == null || tituloTarefa.isEmpty()) {
+            throw new IllegalArgumentException("O título da tarefa não pode ser nulo ou vazio.");
+        }
 
-	}
+        Document filterDocument = new Document("titulo", tituloTarefa);
+        Document updateDoc = new Document("$set", new Document("status", StatusTarefa.NAO_EXECUTADA.name()));
 
-	@Override
-	public Tarefa retornaTarefaPeloId(String id) throws Exception {
+        UpdateResult result = collection.updateOne(filterDocument, updateDoc);
 
-		for (Document doc : collection.find()) {
+        if (result.getModifiedCount() == 0) {
+            throw new RuntimeException("Nenhuma tarefa encontrada com o título fornecido ou a tarefa já estava não concluída.");
+        }
 
-			if (doc.getString("_id").equals(id)) {
+    }
 
-				Tarefa tarefa = new Tarefa(doc.getString("_id"), doc.getString("titulo"), doc.getString("descricao"),
-						doc.getString("data"), doc.getBoolean("status"));
+    @Override
+    public void deleteTarefa(String titulo) throws Exception {
+        if (titulo == null || titulo.isEmpty()) {
+            throw new IllegalArgumentException("O título da tarefa não pode ser nulo ou vazio.");
+        }
 
-				return tarefa;
-			}
-		}
+        Document filterDocument = new Document("titulo", titulo);
+        collection.deleteOne(filterDocument);
+    }
 
-		return null;
-	}
+    @Override
+    public void modificaDescricaoTarefaPeloTitulo(String tituloTarefa, String novaDescricao) throws Exception {
+        if (tituloTarefa == null || tituloTarefa.isEmpty()) {
+            throw new IllegalArgumentException("O título da tarefa não pode ser nulo ou vazio.");
+        }
 
-	@Override
-	public List<Tarefa> retornaTarefasNaoConcluidas() throws Exception {
-		List<Tarefa> tarefas = new ArrayList<>();
-		for (Document doc : collection.find()) {
+        Document filterDocument = new Document("titulo", tituloTarefa);
+        Document updateDoc = new Document("$set", new Document("descricao", novaDescricao));
 
-			if (doc.getBoolean("status") == false) {
+        UpdateResult result = collection.updateOne(filterDocument, updateDoc);
 
-				tarefas.add(new Tarefa(doc.getString("_id"), doc.getString("titulo"), doc.getString("descricao"),
-						doc.getString("data"), doc.getBoolean("status")));
-			}
-		}
+        if (result.getModifiedCount() == 0) {
+            throw new Exception("Nenhuma tarefa encontrada com o título fornecido.");
+        }
+    }
 
-		return tarefas;
-	}
+    @Override
+    public void modificaDataTarefaPeloTitulo(String tituloTarefa, LocalDate novaData) throws Exception {
+        if (tituloTarefa == null || tituloTarefa.isEmpty()) {
+            throw new IllegalArgumentException("O título da tarefa não pode ser nulo ou vazio.");
+        }
 
-	@Override
-	public List<Tarefa> retornaTarefasConcluidas() throws Exception {
-		List<Tarefa> tarefas = new ArrayList<>();
-		for (Document doc : collection.find()) {
+        String dataFormatada = novaData.format(formatter);
 
-			if (doc.getBoolean("status") == true) {
-				tarefas.add(new Tarefa(doc.getString("_id"), doc.getString("titulo"), doc.getString("descricao"),
-						doc.getString("data"), doc.getBoolean("status")));
-			}
+        Document filterDocument = new Document("titulo", tituloTarefa);
+        Document updateDoc = new Document("$set", new Document("dataConclusao", dataFormatada));
 
-		}
-		return tarefas;
-	}
+        UpdateResult result = collection.updateOne(filterDocument, updateDoc);
 
-	@Override
-	public void marcaTarefaComoConcluidaPeloId(String id) throws Exception {
-		Document filterDocument = new Document("_id", id);
-		Document updateDoc = new Document("$set", new Document("status", true));
-		collection.updateOne(filterDocument, updateDoc);
-
-	}
-
-	@Override
-	public void dermarcaTarefaComoConcluidaPeloId(String id) throws Exception {
-		Document filterDocument = new Document("_id", id);
-		Document updateDoc = new Document("$set", new Document("status", false));
-		collection.updateOne(filterDocument, updateDoc);
-
-	}
-
-	@Override
-	public void modificaDescricaoTarefaPeloId(Tarefa tarefa, String novaDescricao) throws Exception {
-		Document filterDocument = new Document("_id", tarefa.getId());
-		Document updateDoc = new Document("$set", new Document("descricao", novaDescricao));
-		collection.updateOne(filterDocument, updateDoc);
-	}
-
-	@Override
-	public void modificaDataTarefaPeloId(Tarefa tarefa, String novaData) throws Exception {
-
-		Document filterDocument = new Document("_id", tarefa.getId());
-
-		Document updateDoc = new Document("$set", new Document("data", novaData));
-		collection.updateOne(filterDocument, updateDoc);
-
-	}
-
-	@Override
-	public void deleteTarefa(String id) throws Exception {
-		Document filterDocument = new Document("_id", id);
-		collection.deleteOne(filterDocument);
-
-	}
-
-	@Override
-	public Long retornaNumeroDeTarefas() throws Exception {
-		return collection.countDocuments();
-	}
-
-
-	@Override
-	public void marcaComoConcluidaPelaData() throws Exception {
-		for (Document doc : collection.find()) {
-
-			if (Data.dataJaPassou(doc.getString("data"))) {
-
-				Document filterDocument = new Document("_id", doc.getString("_id"));
-				Document updateDoc = new Document("$set", new Document("status", true));
-				collection.updateOne(filterDocument, updateDoc);
-			}
-		}
-
-	} */
+        if (result.getModifiedCount() == 0) {
+            throw new Exception("Nenhuma tarefa encontrada com o título fornecido.");
+        }
+    }
 
 }

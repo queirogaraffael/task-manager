@@ -42,17 +42,19 @@ public class MenuPrincipalTarefaController {
                         break;
 
                     case (ConstantesMenuPrincipal.MARCAR_CONCLUIDA):
-
+                        marcarComoConcluida();
                         break;
 
                     case (ConstantesMenuPrincipal.DESMARCAR_CONCLUIDA):
-
+                        desmarcarComoConcluida();
                         break;
 
                     case (ConstantesMenuPrincipal.MODIFICAR):
+                        modificaTarefa();
                         break;
 
                     case (ConstantesMenuPrincipal.REMOVER):
+                        removeTarefa();
                         break;
 
                     case (ConstantesMenuPrincipal.SAIR):
@@ -65,6 +67,59 @@ public class MenuPrincipalTarefaController {
 
         } while (!opcaoMenuPrincipal.equals(ConstantesMenuPrincipal.SAIR));
 
+    }
+
+    private void removeTarefa() throws Exception {
+        String tituloTarefa = SelecionaTarefa.selecionaTituloTarefa(tarefaService.retornaTarefas());
+
+        if (tituloTarefa == null) {
+            return;
+        }
+
+        tarefaService.deleteTarefa(tituloTarefa);
+
+        AlertasTarefa.alertaTarefaRemovida();
+
+    }
+
+    private void modificaTarefa() {
+        int opcaoModificar = ModificarTarefaUI.opcaoEditar();
+
+        if (opcaoModificar == 2) {
+            return;
+        }
+
+        String tituloTarefa = SelecionaTarefa.selecionaTituloTarefa(tarefaService.retornaTarefas());
+
+        if (tituloTarefa == null) {
+            return;
+        }
+
+        try {
+            if (opcaoModificar == 0) {
+                String novaDescricao = LerDadosTarefaUI.lerDescricaoTarefa();
+                tarefaService.modificaDescricaoTarefaPeloTitulo(tituloTarefa, novaDescricao);
+            } else if (opcaoModificar == 1) {
+                LocalDate novaData = DataUI.solicitarDataValida();
+                tarefaService.modificaDataTarefaPeloTitulo(tituloTarefa, novaData);
+            }
+
+            AlertasTarefa.alertaTarefaModificada();
+        } catch (Exception e) {
+            AlertasTarefa.alertaErro(e);
+        }
+
+    }
+
+    private void desmarcarComoConcluida() {
+        String tituloTarefa = SelecionaTarefa.selecionaTituloTarefa(tarefaService.retornaTarefasExecutadas());
+
+        try {
+            tarefaService.desmarcaTarefaComoConcluidaPeloTitulo(tituloTarefa);
+            AlertasTarefa.alertaTarefaDesmarcada();
+        } catch (Exception e) {
+            AlertasTarefa.alertaErro(e);
+        }
     }
 
     private void adicionaTarefa() throws Exception {
@@ -131,6 +186,18 @@ public class MenuPrincipalTarefaController {
     }
 
 
+    private void marcarComoConcluida() {
+        String tituloTarefa = SelecionaTarefa.selecionaTituloTarefa(tarefaService.retornaTarefasNaoExecutadas());
+
+            try {
+                tarefaService.marcaTarefaComoConcluidaPeloTitulo(tituloTarefa);
+                AlertasTarefa.alertaTarefaConcluida();
+            } catch (Exception e) {
+                AlertasTarefa.alertaErro(e);
+            }
+
+
+    }
 
 
 

@@ -5,8 +5,7 @@ import javax.swing.*;
 public class GerenciadorTarefasUI {
 
     public static String exibirMenuGerenciadorDeTarefas() {
-        Object[] opcoesMenu = {"Adicionar", "Visualizar Tarefa(s)", "Marcar como concluida",
-                "Marcar tarefas como concluídas pela data", "Desmarcar como concluída",
+        Object[] opcoesMenu = {"Adicionar", "Visualizar Tarefa(s)", "Marcar como concluida", "Desmarcar como concluida",
                 "Modificar", "Remover", "Sair"};
 
         Object opcaoSelecionada = JOptionPane.showInputDialog(null, "Escolha uma opcao", "Gerenciador de Tarefas",
