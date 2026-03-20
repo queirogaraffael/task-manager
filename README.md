@@ -4,7 +4,7 @@ O **Gerenciador de Tarefas** é um aplicativo que permite gerenciar tarefas de f
 
 ---
 
-## 📌 Pré-requisitos
+## Pré-requisitos
 
 Antes de utilizar o **Gerenciador de Tarefas**, certifique-se de ter instalado:
 
@@ -13,7 +13,7 @@ Antes de utilizar o **Gerenciador de Tarefas**, certifique-se de ter instalado:
 
 ---
 
-## 📥 Instalação e Configuração
+## Instalação e Configuração
 
 1. Clone este repositório ou baixe o código-fonte do **Gerenciador de Tarefas**.
 2. Certifique-se de ter o **JDK** instalado e corretamente configurado no sistema.
@@ -25,7 +25,7 @@ Antes de utilizar o **Gerenciador de Tarefas**, certifique-se de ter instalado:
 
 ---
 
-## 🚀 Utilização
+## Utilização
 
 Ao iniciar o programa, será exibida uma interface de linha de comando com as seguintes opções:
 
@@ -39,7 +39,7 @@ Ao iniciar o programa, será exibida uma interface de linha de comando com as se
 
 ---
 
-## 🛠 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - **Java**
 - **Swing** (Interface Gráfica)
@@ -47,7 +47,7 @@ Ao iniciar o programa, será exibida uma interface de linha de comando com as se
 
 ---
 
-## 📌 Padrões de Projeto Utilizados
+## Padrões de Projeto Utilizados
 
 - **MVC (Model-View-Controller)** – Organização do código em camadas.
 - **DAO (Data Access Object)** – Facilita o acesso e manipulação dos dados.
@@ -55,7 +55,7 @@ Ao iniciar o programa, será exibida uma interface de linha de comando com as se
 
 ---
 
-## 🏗 Arquitetura
+## Arquitetura
 
 O projeto segue a arquitetura **MVC**:
 
@@ -65,12 +65,12 @@ O projeto segue a arquitetura **MVC**:
 
 ---
 
-## 🤝 Contribuição
+## Contribuição
 
 Contribuições são bem-vindas! Sinta-se à vontade para enviar pull requests, relatar problemas ou propor novos recursos.
 
 ---
 
-## 📜 Licença
+## Licença
 
 Este projeto está licenciado sob a [Licença MIT](https://github.com/queirogaraffael/task-manager/blob/main/LICENSE).
